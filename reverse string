@@ -1,0 +1,4 @@
+# write a python program that accepts a word fromthe use and reverse it.
+word = input("pratapandsubhashree")
+rev_word = word[-1::-1]
+print(rev_word)

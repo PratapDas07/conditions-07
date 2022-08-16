@@ -1,0 +1,5 @@
+my_string="hi my name is pratap das"
+rev_str=my_string[::-1]
+print(rev_str)
+dm=rev_str.split()
+dm[::-1]

@@ -1,0 +1,4 @@
+my_string="i am pratap das"
+new_string = my_string.split(" ")
+print("\n".join(new_string))
+

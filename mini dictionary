@@ -1,0 +1,7 @@
+ 
+# mini dictionary
+# sample output :( 'a':97 ,'b':98 and so on...........
+a= dict()
+for i in range (97,123):
+ a[chr(i)] = str(i)
+ print(a)

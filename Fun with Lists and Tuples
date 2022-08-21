@@ -1,0 +1,9 @@
+# WRITE A PYTHON PROGRAM TO GET A LIST , SORTED IN INCREASING ORDER  BY THE LAT ELEMENTIN EACH TUPLE FROM A GIVEN LIST OF NON EMPTY TUPLES
+# sample list : [(2,5),(1,2),(4,4), (2,3),(2,1)]
+
+def 1(n):
+     return n[-1]
+def sort(t):
+    return sorted(t, key=1)
+ sample_list=[(2,5),(1,2),(4,4), (2,3),(2,1)]  
+ print(sort(sample_list))

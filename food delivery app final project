@@ -1,0 +1,438 @@
+import json
+import sys
+class restaurent:
+    def __init__(self):
+        self.foods={}
+        self.food_id=len(self.foods)+1
+        self.details={}
+        self.details_id=len(self.details)+1
+        self.order=[]
+        self.orderhistory=[]
+        self.admindetails={}
+        self.admindetails_id=len(self.admindetails)+1
+
+    def adminsignup(self):
+        self.adminname=input("please enter your full name ")
+        self.adminnumber=int(input("enter mob no. "))
+        self.adminemail=input("enter email ")
+        self.adminpassword=input("enter password ")
+        self.admininfo={"name":self.adminname,"number":self.adminnumber,"email":self.adminemail,"password":self.adminpassword}
+        self.admindetails_id=len(self.admindetails)+1
+        self.admindetails[self.admindetails_id]=self.admininfo
+        print("admin registered successfully")
+        with open("admininfo.json","w")as  j:
+            json.dump(self.admininfo,j)
+            print("***********************************************************************************************************")
+         
+    def adminlogin(self):
+        adminemail=input("Enter your email for admin panel ")
+        adminpass=input("Enter password for login  ")
+        while True:
+            if adminemail==self.adminemail and adminpass==self.adminpassword:
+                print("login successful")
+                break
+            else:
+                print("Incorrect details")
+                sys.exit()
+            
+        
+    def food_items(self):
+        self.name=input("Enter food item name ")
+        self.quantity=int(input("enter quantity "))
+        self.price=int(input("Enter price in rs "))
+        self.disocunt=int(input("Enter discount in rs "))
+        self.stock=int(input("enter stock "))
+        self.item={"Name":self.name,"quantity":self.quantity,"price":self.price,"disocunt":self.disocunt,"stock":self.stock}
+        self.food_id=len(self.foods)+1
+        self.foods[self.food_id]=self.item
+        print(self.foods)
+        
+        with open("foods.json","w")as  f:
+            json.dump(self.foods,f)
+            print("***********************************************************************************************************")
+            print("items added succesfully")
+    def remove_item(self):
+        del self.foods[int(input("enter food id to be deleted"))]
+        print("remaining items",self.foods)
+        with open("foods.json","w")as  f:
+            json.dump(self.foods,f)
+            print("***********************************************************************************************************")
+            print("items deleted succesfully")
+    def edit_items(self):
+        f_id=int(input("enter id which you want to edit "))
+        for i in self.foods[f_id]:
+            self.foods[f_id][i]=input(f"please enter {i} you want to edit")
+        print("updated foods",self.foods)
+        with open("foods.json","w")as  f:
+            json.dump(self.foods,f)
+            print("***********************************************************************************************************")
+            print("items updated succesfully")
+    def view(self):
+        print("list of all food items")
+        for i in self.foods:
+            print("food id ",i)
+            for j in self.foods[i]:
+                print(j,":",self.foods[i][j]  , end =" " )
+            print()
+                
+    def signup(self):
+        self.fname=input("please enter your full name ")
+        self.number=int(input("enter mob no. "))
+        self.email=input("enter email ")
+        self.password=input("enter password ")
+        self.address=input("enter address ")
+        self.info={"name":self.fname,"number":self.number,"email":self.email,"password":self.password,"address":self.address}
+        self.details_id=len(self.details)+1
+        self.details[self.details_id]=self.info
+        with open("info.json","w")as  l:
+            json.dump(self.info,l)
+            print("***********************************************************************************************************")
+            
+        
+        
+        
+    def login(self):
+        attempt=0
+        while attempt<3:
+            uid=input("enter user id ")
+            password=input("enter password ")
+            if uid==self.email and password==self.password:
+                    print("  Login successfull   ")
+                    print("********************************************************************")
+                    break
+            else :
+                attempt=attempt+1
+                print("Enter valid email or password ")
+        else:
+            print("You exceeded login attempts ")
+            sys.exit()
+                
+    def menu(self):
+        self.k=[["1.Tandoori Chicken (4 pieces) [INR 240]"],["2. Vegan Burger (1 Piece) [INR 320]"],["3. Truffle Cake (500gm) [INR 900]"]]
+        for i in self.k:
+            for j in i:
+                print(j)
+                
+    def orderfood(self):
+        self.choice=[int(choice) for choice in input("choose items").split()]
+        print(self.choice)
+        for i in self.choice:
+            print(self.k[i-1])
+        print("************************************************************************************")
+        confirm=input("Enter Y  to confirm order N for cancelling order = ")
+        if confirm=="y" or confirm=="Y":
+             for i in self.choice:
+                if i==1:
+                    self.order.append(self.k[i-1])
+                if i==2:
+                    self.order.append(self.k[i-1])
+                if i==3:
+                    self.order.append(self.k[i-1])
+            
+        elif confirm=="n" or confirm=="N":
+            pass
+        
+    
+                
+                
+                
+    def vieworder(self):
+        
+        for i in self.order:
+            for j in i:
+                print(j,"\n")
+                
+                
+    def update_profile(self):
+        for i in self.info:
+            self.info[i]=input(f"Please enter {i} you want to edit = ")
+        print("User details updated successfully ",self.info)
+        with open("info.json","w")as  l:
+            json.dump(self.info,l)
+            print("***********************************************************************************************************")
+            print("Updated succesfully")
+        
+        
+        
+x=restaurent()
+
+while True:
+    print("Press 1 for login in Admin/Signup ") 
+    print("press 2 for User Signup/Login")
+    print("press 3 for Exit")
+    print("****************************************************************************")
+    option=int(input("Enter option "))
+    while True:
+        if option==1:
+            print("press 1 for admin signup")
+            print("press2 for admin login")
+            print("press 3 for exitting")
+            optiona=int(input("Please choose option = "))
+            if optiona==1:
+                x.adminsignup()
+                continue
+            if optiona==2:
+                x.adminlogin()
+                while True:
+                    print("Press 1 for Adding items ")
+                    print("Press 2 for Edit items ")
+                    print("Press 3 for Deletion of items ")
+                    print("Press 4 for Viewing items ")
+                    print("Press 5 for Exit ")
+                    option1=int(input("Choose option = "))
+                    print("****************************************************************************")
+                    if option1==1:
+                        n=int(input("Enter number of food items to be added "))
+                        for i in range(n):
+                            x.food_items()
+                            continue
+                    elif option1==2:
+                        x.edit_items()
+                        continue
+                    elif option1==3:
+                        x.remove_item()
+                        continue
+                    elif option1==4:
+                        x.view()
+                        continue
+                    elif option1==5:
+                        break
+            if optiona==3:
+                break
+        elif option==2:
+            print("Press 1  for User Signup")
+            print("Press 2 for User Login")
+            print("Press 3 for Main menu")
+           
+            choose=int(input("Enter option = "))
+            if choose==1:
+                x.signup()
+                print("User registerd successfully")
+                print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-")
+            elif choose==2:
+                x.login()
+                while True:
+                    print("Press 1 for Menu")
+                    print("Press 2 for Placing order")
+                    print("press 3 for Order history")
+                    print("press 4 for Update profile")
+                    print("press 5 for Back")
+                    option2=int(input("choose option="))
+                    if option2==1:
+                        x.menu()
+                        print("--------------------------------------------------------------------")
+                        continue
+                    elif option2==2:
+                        x.orderfood()
+                        print("--------------------------------------------------------------------")
+                        continue
+                    elif option2==3:
+                        print("*********************************************************************")
+                        print("your order history -:")
+                        x.vieworder()
+                        print("********************************************************************")
+                    elif option2==4:
+                        x.update_profile()
+                        
+                    elif option2==5:
+                        break
+                        
+            elif choose==3:
+                break
+        elif option==3:
+            sys.exit()
+        elif option>3:
+            print("Please enter valid input")
+            print("*********************************")
+            break
+            
+       
+                
+                    
+                    
+                
+                
+            
+Press 1 for login in Admin/Signup 
+press 2 for User Signup/Login
+press 3 for Exit
+****************************************************************************
+Enter option 1
+press 1 for admin signup
+press2 for admin login
+press 3 for exitting
+Please choose option1
+please enter your full name admin
+enter mob no. 123
+enter email admin@xyz
+enter password 100
+admin registered successfully
+***********************************************************************************************************
+press 1 for admin signup
+press2 for admin login
+press 3 for exitting
+Please choose option2
+Enter your email for admin panel admin@xyz
+Enter password for login  100
+login successful
+Press 1 for Adding items 
+Press 2 for Edit items 
+Press 3 for Deletion of items 
+Press 4 for Viewing items 
+Press 5 for Exit 
+Choose option 1
+****************************************************************************
+Enter number of food items to be added 2
+Enter food item name maggie
+enter quantity 1
+Enter price in rs 55
+Enter discount in rs 5
+enter stock 10
+{1: {'Name': 'maggie', 'quantity': 1, 'price': 55, 'disocunt': 5, 'stock': 10}}
+***********************************************************************************************************
+items added succesfully
+Enter food item name pizza
+enter quantity 2
+Enter price in rs 450
+Enter discount in rs 50
+enter stock 10
+{1: {'Name': 'maggie', 'quantity': 1, 'price': 55, 'disocunt': 5, 'stock': 10}, 2: {'Name': 'pizza', 'quantity': 2, 'price': 450, 'disocunt': 50, 'stock': 10}}
+***********************************************************************************************************
+items added succesfully
+Press 1 for Adding items 
+Press 2 for Edit items 
+Press 3 for Deletion of items 
+Press 4 for Viewing items 
+Press 5 for Exit 
+Choose option 2
+****************************************************************************
+enter id which you want to edit 2
+please enter Name you want to editpasta
+please enter quantity you want to edit1
+please enter price you want to edit80
+please enter disocunt you want to edit25
+please enter stock you want to edit100
+updated foods {1: {'Name': 'maggie', 'quantity': 1, 'price': 55, 'disocunt': 5, 'stock': 10}, 2: {'Name': 'pasta', 'quantity': '1', 'price': '80', 'disocunt': '25', 'stock': '100'}}
+***********************************************************************************************************
+items updated succesfully
+Press 1 for Adding items 
+Press 2 for Edit items 
+Press 3 for Deletion of items 
+Press 4 for Viewing items 
+Press 5 for Exit 
+Choose option 3
+****************************************************************************
+enter food id to be deleted2
+remaining items {1: {'Name': 'naggie', 'quantity': 1, 'price': 55, 'disocunt': 5, 'stock': 10}}
+***********************************************************************************************************
+items deleted succesfully
+Press 1 for Adding items 
+Press 2 for Edit items 
+Press 3 for Deletion of items 
+Press 4 for Viewing items 
+Press 5 for Exit 
+Choose option 4
+****************************************************************************
+list of all food items
+food id  1
+Name : noodles quantity : 1 price : 55 disocunt : 5 stock : 10 
+Press 1 for Adding items 
+Press 2 for Edit items 
+Press 3 for Deletion of items 
+Press 4 for Viewing items 
+Press 5 for Exit 
+Choose option 5
+****************************************************************************
+press 1 for admin signup
+press2 for admin login
+press 3 for exitting
+Please choose option3
+Press 1 for login in Admin/Signup 
+press 2 for User Signup/Login
+press 3 for Exit
+****************************************************************************
+Enter option 2
+Press 1  for User Signup
+Press 2 for User Login
+Press 3 for Main menu
+Enter option1
+please enter your full name user
+enter mob no. 808080
+enter email user@abc
+enter password 802
+enter address fzr
+***********************************************************************************************************
+User registerd successfully
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-
+Press 1  for User Signup
+Press 2 for User Login
+Press 3 for Main menu
+Enter option2
+enter user id user@abc
+enter password 802
+  Login successfull   
+********************************************************************
+Press 1 for Menu
+Press 2 for Placing order
+press 3 for Order history
+press 4 for Update profile
+press 5 for Back
+choose option=1
+1.Tandoori Chicken (4 pieces) [INR 240]
+2. Vegan Burger (1 Piece) [INR 320]
+3. Truffle Cake (500gm) [INR 900]
+--------------------------------------------------------------------
+Press 1 for Menu
+Press 2 for Placing order
+press 3 for Order history
+press 4 for Update profile
+press 5 for Back
+choose option=2
+choose items1 2
+[1, 2]
+['1.Tandoori Chicken (4 pieces) [INR 240]']
+['2. Vegan Burger (1 Piece) [INR 320]']
+************************************************************************************
+Enter Y  to confirm order N for cancelling order = y
+--------------------------------------------------------------------
+Press 1 for Menu
+Press 2 for Placing order
+press 3 for Order history
+press 4 for Update profile
+press 5 for Back
+choose option=3
+*********************************************************************
+your order history -:
+1.Tandoori Chicken (4 pieces) [INR 240] 
+
+2. Vegan Burger (1 Piece) [INR 320] 
+
+********************************************************************
+Press 1 for Menu
+Press 2 for Placing order
+press 3 for Order history
+press 4 for Update profile
+press 5 for Back
+choose option=4
+Please enter name you want to pratapbbc
+Please enter number you want to subha19958249
+Please enter email you want to pratapbbc@abc
+Please enter password you want to subha1995
+Please enter address you want to jajpurodisha
+User details updated successfully  {'name': 'pratap', 'number': '19958249', 'email': 'pratap@abc', 'password': '1995', 'address': 'jajpurodisha'}
+***********************************************************************************************************
+Updated succesfully
+Press 1 for Menu
+Press 2 for Placing order
+press 3 for Order history
+press 4 for Update profile
+press 5 for Back
+choose option=5
+Press 1  for User Signup
+Press 2 for User Login
+Press 3 for Main menu
+Enter option3
+Press 1 for login in Admin/Signup 
+press 2 for User Signup/Login
+press 3 for Exit
+****************************************************************************
